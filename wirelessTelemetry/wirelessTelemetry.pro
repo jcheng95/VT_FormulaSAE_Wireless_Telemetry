@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         frontend.cpp \
     backend.cpp \
-    controller.cpp
+    controller.cpp \
+    xbeemessenger.cpp
 
 HEADERS  += frontend.h \
     backend.h \
-    controller.h
+    controller.h \
+    xbeemessenger.h
 
 FORMS    += frontend.ui \
     backend.ui

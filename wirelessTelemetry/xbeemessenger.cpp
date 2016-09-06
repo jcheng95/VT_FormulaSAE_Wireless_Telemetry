@@ -1,10 +1,3 @@
-#ifndef BACKEND_H
-#define BACKEND_H
-
-#include <QMainWindow>
-
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include "xbeemessenger.h"
 
 /*
@@ -33,31 +26,40 @@ ________________________________________
 Sum all bytes without bytes 1-3 (includes checksum) which should be equal to 0xFF
 */
 
-namespace Ui {
-class backEnd;
+xbeeMessenger::xbeeMessenger()
+{
+    running = false;
 }
 
-class backEnd : public QMainWindow
+xbeeMessenger::xbeeMessenger(QSerialPortInfo newPort)
 {
-    Q_OBJECT
+    port.setPort(newPort);
+    running = false;
+}
 
-public:
-    explicit backEnd(QWidget *parent = 0);
-    ~backEnd();
+void xbeeMessenger::setPortData(QSerialPortInfo newPort)
+{
+    // Takes the QSerialPortInfo and converts it into QSerialPort
+    port.setPort(newPort);
+}
 
-public slots:
-    void changePort(QSerialPortInfo newPort);
-    void beginCommunication();
-    void endCommunication();
+void xbeeMessenger::startRunning()
+{
+    running = true;
+}
 
-signals:
-    void startRunning();
-    void stopRunning();
+void xbeeMessenger::stopRunning()
+{
+    running = false;
+}
 
-private:
-    Ui::backEnd *ui;
-    QSerialPortInfo xbee;
-    xbeeMessenger childThread;
-};
-
-#endif // BACKEND_H
+void xbeeMessenger::run()
+{
+    // Opens the port
+    if(port.open(QIODevice::ReadWrite)) {
+        // Run forever or until told to stop
+        while(running) {
+            // Do the communication here
+        }
+    }
+}

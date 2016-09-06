@@ -1,11 +1,11 @@
-#ifndef BACKEND_H
-#define BACKEND_H
+#ifndef XBEEMESSENGER_H
+#define XBEEMESSENGER_H
 
-#include <QMainWindow>
+#include <QObject>
+#include <QWidget>
 
 #include <QSerialPort>
 #include <QSerialPortInfo>
-#include "xbeemessenger.h"
 
 /*
  * API Mode
@@ -33,31 +33,21 @@ ________________________________________
 Sum all bytes without bytes 1-3 (includes checksum) which should be equal to 0xFF
 */
 
-namespace Ui {
-class backEnd;
-}
-
-class backEnd : public QMainWindow
+class xbeeMessenger : public QWidget
 {
-    Q_OBJECT
-
 public:
-    explicit backEnd(QWidget *parent = 0);
-    ~backEnd();
+    xbeeMessenger();
+    xbeeMessenger(QSerialPortInfo newPort);
+    void run();
+    void setPortData(QSerialPortInfo newPort);
 
 public slots:
-    void changePort(QSerialPortInfo newPort);
-    void beginCommunication();
-    void endCommunication();
-
-signals:
     void startRunning();
     void stopRunning();
 
 private:
-    Ui::backEnd *ui;
-    QSerialPortInfo xbee;
-    xbeeMessenger childThread;
+    QSerialPort port;
+    bool running;
 };
 
-#endif // BACKEND_H
+#endif // XBEEMESSENGER_H
