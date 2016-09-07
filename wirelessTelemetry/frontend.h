@@ -31,7 +31,7 @@ signals:
 private:
     Ui::frontEnd *ui;
     QList<QSerialPortInfo> ports;
-    QSerialPort xbee;
+    QSerialPortInfo xbee;
 };
 
 #endif // FRONTEND_H

@@ -34,6 +34,7 @@ xbeeMessenger::xbeeMessenger()
 xbeeMessenger::xbeeMessenger(QSerialPortInfo newPort)
 {
     port.setPort(newPort);
+    connect(&port, SIGNAL(readyRead()), this, SLOT());  // This needs a read slot
     running = false;
 }
 
@@ -41,6 +42,7 @@ void xbeeMessenger::setPortData(QSerialPortInfo newPort)
 {
     // Takes the QSerialPortInfo and converts it into QSerialPort
     port.setPort(newPort);
+    connect(&port, SIGNAL(readyRead()), this, SLOT());  // This needs a read slot
 }
 
 void xbeeMessenger::startRunning()
@@ -53,6 +55,13 @@ void xbeeMessenger::stopRunning()
     running = false;
 }
 
+void xbeeMessenger::closePort()
+{
+    if(port.isOpen()) {
+        port.close();
+    }
+}
+
 void xbeeMessenger::run()
 {
     // Opens the port
@@ -60,6 +69,11 @@ void xbeeMessenger::run()
         // Run forever or until told to stop
         while(running) {
             // Do the communication here
+            /*if() {
+
+            }*/
         }
+    } else {
+        // Print out some error message and end program
     }
 }

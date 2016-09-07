@@ -38,12 +38,16 @@ class xbeeMessenger : public QWidget
 public:
     xbeeMessenger();
     xbeeMessenger(QSerialPortInfo newPort);
+
     void run();
     void setPortData(QSerialPortInfo newPort);
 
 public slots:
     void startRunning();
     void stopRunning();
+    void closePort();
+
+signals:
 
 private:
     QSerialPort port;

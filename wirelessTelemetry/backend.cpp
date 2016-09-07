@@ -35,8 +35,11 @@ backEnd::backEnd(QWidget *parent) :
     this->showFullScreen();
     this->showMaximized();
 
-    connect(this, SIGNAL(stopRunning()), &childThread, SLOT(stopRunning()));    // Connection to enable the xbeeMessenger object
-    connect(this, SIGNAL(startRunning()), &childThread, SLOT(startRunning()));  // Connection to disable the xbeeMessenger object
+    connect(this, SIGNAL(stopRunning()), &childThread, SLOT(stopRunning()));            // Connection to enable the xbeeMessenger object
+    connect(this, SIGNAL(startRunning()), &childThread, SLOT(startRunning()));          // Connection to disable the xbeeMessenger object
+    connect(ui->playButton, SIGNAL(clicked(bool)), this, SLOT(beginCommunication()));   // Connection to use the play button to enable the xbeeMessenger object
+    connect(ui->pauseButton, SIGNAL(clicked(bool)), this, SLOT(endCommunication()));    // Connection to use the pause button to disable the xbeeMessenger object
+    connect(ui->stopButton, SIGNAL(clicked(bool)), &childThread, SLOT(closePort()));    // Connection to end communication entirely
 }
 
 void backEnd::changePort(QSerialPortInfo newPort)
